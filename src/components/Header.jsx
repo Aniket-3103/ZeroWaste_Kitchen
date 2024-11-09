@@ -1,48 +1,73 @@
-import { AppBar, Box, InputBase, Toolbar } from "@mui/material";
-import {
-  Menu as MenuIcon,
-  Search,
-  Tune,
-  HelpOutlineOutlined,
-  SettingsOutlined,
-  AppsOutlined,
-  AccountCircleOutlined,
-} from "@mui/icons-material";
+import { FaBars, FaCog, FaUserCircle } from "react-icons/fa";
+import { AiFillAppstore } from "react-icons/ai";
+import Technovate_logo from "../../src/assets/Technovate_logo.png"
+import { Button } from "@mui/material"; // Optionally you can use Material UI's Button for better design
 
-export default function Header({ toggleDrawer }) {
+export default function Navbar({ toggleDrawer }) {
   return (
-    <AppBar position="static" className="bg-gray-100 shadow-none">
-      <Toolbar className="flex justify-between items-center">
-        {/* Left Section: Menu Icon and Logo */}
-        <div className="flex items-center">
-          <MenuIcon className="text-gray-600 cursor-pointer" onClick={toggleDrawer} />
-          <img
-            src="images/gmailLogo.png"
-            alt="logo"
-            className="ml-4 w-28"
-          />
-        </div>
+    <nav className="bg-gray-100 shadow-md w-full px-4 py-2 flex items-center justify-between">
+      {/* Left Section: Menu Icon and Logo */}
+      <div className="flex items-center space-x-4">
+        {/* Menu Button */}
+        <img
+          src={Technovate_logo}
+          alt="logo"
+          className="w-20 h-20"
+        />
 
-        {/* Middle Section: Search Bar */}
-        <Box
-          className="flex items-center bg-blue-100 rounded-lg px-4 ml-16 w-[690px] max-w-[720px] h-12"
+        <Button
+          variant="text"
+          className="text-gray-600"
+          onClick={() => console.log("Go to ZeroWaste Kitchen")}
         >
-          <Search className="text-gray-600" />
-          <InputBase
-            placeholder="Search mail"
-            className="flex-grow px-2 text-sm"
-          />
-          <Tune className="text-gray-600" />
-        </Box>
+          ZeroWaste Kitchen
+        </Button>
+      </div>
 
-        {/* Right Section: Option Icons */}
-        <Box className="flex items-center space-x-5">
-          <HelpOutlineOutlined className="text-gray-600 cursor-pointer" />
-          <SettingsOutlined className="text-gray-600 cursor-pointer" />
-          <AppsOutlined className="text-gray-600 cursor-pointer" />
-          <AccountCircleOutlined className="text-gray-600 cursor-pointer" />
-        </Box>
-      </Toolbar>
-    </AppBar>
+      {/* Middle Section: Navigation Links */}
+      <div className="flex items-center space-x-8">
+
+
+        {/* Recipe's Dashboard Link */}
+        <Button
+          variant="text"
+          className="text-gray-600"
+          onClick={() => console.log("Go to Recipe's Dashboard")}
+        >
+          Recipe's
+        </Button>
+
+        {/* Donate Link */}
+        <Button
+          variant="text"
+          className="text-gray-600"
+          onClick={() => console.log("Go to Donate")}
+        >
+          Donate
+        </Button>
+
+        <Button
+          variant="text"
+          className="text-gray-600"
+          onClick={() => console.log("Go to Donate")}
+        >
+          Dashboard
+        </Button>
+
+
+      </div>
+
+      {/* Right Section: Settings & User */}
+      <div className="flex items-center space-x-5">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => console.log("Logout action")}
+        >
+          <FaUserCircle className="text-white-600 cursor-pointer text-xl" />&nbsp; &nbsp;
+          Logout
+        </Button>
+      </div>
+    </nav>
   );
 }
