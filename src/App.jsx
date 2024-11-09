@@ -1,12 +1,10 @@
-import { useState } from 'react'
 import './App.css'
+import NavHome from "./navigation/NavHome"
 
 function App() {
 
   return (
-    <>
-      <div className='bg-red-500'>hehe</div>
-    </>
+      <NavHome/ >
   )
 }
 
