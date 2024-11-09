@@ -29,7 +29,8 @@
     "react-router-dom": "^6.28.0",
     "tailwindcss": "^3.4.14",
     "typeit": "^8.8.7",
-    "typeit-react": "^2.7.7"
+    "typeit-react": "^2.7.7",
+    "react-toastify": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
