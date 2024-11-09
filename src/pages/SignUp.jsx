@@ -82,13 +82,34 @@ function SignUp() {
               type="text"
               id="first_name"
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter your email address "
+              placeholder="Enter your address "
               required
             />
           </div>
+
           <div className="max-w-sm p-6 pt-1 pb-1">
             <input
               type="text"
+              id="first_name"
+              className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Mobile Number"
+              required
+            />
+          </div>
+
+          <div className="max-w-sm p-6 pt-1 pb-1">
+            <input
+              type="text"
+              id="first_name"
+              className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Email Address "
+              required
+            />
+          </div>
+
+          <div className="max-w-sm p-6 pt-1 pb-1">
+            <input
+              type="password"
               id="first_name"
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter your password "
@@ -100,17 +121,7 @@ function SignUp() {
               type="text"
               id="first_name"
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Mobile Number"
-              required
-            />
-          </div>
-
-          <div className="max-w-sm p-6 pt-1">
-            <input
-              type="text"
-              id="first_name"
-              className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Email Address "
+              placeholder="Confirm your password"
               required
             />
           </div>
