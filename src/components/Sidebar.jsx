@@ -17,9 +17,10 @@ export default function Sidebar() {
           width: 250,    // Set the width of the sidebar
           height: '96vh',   // Set the height to 100vh to make it full height
           borderRight: 'none', // Remove right border
-          backgroundColor: '#D4EAC7', // Light green background (you can adjust the color)
+          background: 'linear-gradient(to bottom, #D4EAC7, #E8F5E9)', // Gradient from green to white
           padding: 2,
           borderRadius:6,
+          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', // Lighter shadow at the bottom
         },
       }}
       className="shadow-lg" // Add shadow to the sidebar for a better UI
