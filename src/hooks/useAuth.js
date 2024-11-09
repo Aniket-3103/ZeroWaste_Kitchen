@@ -1,4 +1,4 @@
-import api from "../../constants/api";
+import api from "../constants/api";
 
 const useAuth = () => {
   const verifyAuth = () => {
@@ -18,7 +18,7 @@ const useAuth = () => {
       if (response?.data) {
         const data = response.data;
 
-        return data.message === "user-created"
+        return data.statusText === "success"
           ? { user: data.user, message: "User registeration successful" }
           : { user: null, message: "User registeration failed" };
       } else {
@@ -39,7 +39,7 @@ const useAuth = () => {
       if (response?.data) {
         const data = response.data;
 
-        return data.status === "success"
+        return data.statusText === "success"
           ? { user: data.user, message: data.status, token: data.token }
           : { user: null, message: data.status, token: null };
       } else {

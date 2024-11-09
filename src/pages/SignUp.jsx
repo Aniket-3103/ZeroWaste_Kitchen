@@ -1,12 +1,27 @@
-import React from "react";
-import { useState } from "react";
-
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import useAuth from "../hooks/useAuth";
+import { toastError, toastSuccess } from "../components/notifications";
 
 function SignUp() {
   const navigate = useNavigate();
 
+  const [fullName, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  const { register } = useAuth();
+
+  const handleChange = (e, setter) => {
+    setter(e.target.value);
+  };
 
   const changeCheckboxValue = () => {
     setIsChecked(!isChecked);
@@ -14,6 +29,45 @@ function SignUp() {
 
   const navigateToLoginPage = () => {
     navigate("/login");
+  };
+
+  const handleSignUp = async () => {
+    setLoading(true);
+    if (
+      fullName === "" ||
+      email === "" ||
+      mobileNumber === "" ||
+      address === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      setLoading(false);
+      return toastError("Please fill the complete form");
+    }
+    if (password !== confirmPassword) {
+      setLoading(false);
+      return toastError("Passwords do not match");
+    }
+
+    const payload = {
+      name: fullName,
+      isOrganization: isChecked,
+      password: password,
+      email: email,
+      mobileNumber: mobileNumber,
+      username: email,
+      location: address,
+    };
+
+    const response = await register(payload);
+
+    if (response.user) {
+      navigateToLoginPage();
+      toastSuccess("Registration Successful");
+    } else {
+      toastError(response.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -54,7 +108,7 @@ function SignUp() {
               Sign Up
             </h2>
             <p>
-              Already have an account ?
+              Already have an account ?{" "}
               <span
                 onClick={navigateToLoginPage}
                 style={{
@@ -70,7 +124,8 @@ function SignUp() {
           <div className="max-w-sm p-6 pt-1 pb-1">
             <input
               type="text"
-              id="first_name"
+              value={fullName}
+              onChange={(e) => handleChange(e, setFullName)}
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Full Name"
               required
@@ -80,9 +135,10 @@ function SignUp() {
           <div className="max-w-sm px-6 pt-1 pb-1">
             <input
               type="text"
-              id="first_name"
+              value={address}
+              onChange={(e) => handleChange(e, setAddress)}
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter your address "
+              placeholder="Enter your address"
               required
             />
           </div>
@@ -90,7 +146,8 @@ function SignUp() {
           <div className="max-w-sm p-6 pt-1 pb-1">
             <input
               type="text"
-              id="first_name"
+              value={mobileNumber}
+              onChange={(e) => handleChange(e, setMobileNumber)}
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Mobile Number"
               required
@@ -100,9 +157,10 @@ function SignUp() {
           <div className="max-w-sm p-6 pt-1 pb-1">
             <input
               type="text"
-              id="first_name"
+              value={email}
+              onChange={(e) => handleChange(e, setEmail)}
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Email Address "
+              placeholder="Email Address"
               required
             />
           </div>
@@ -110,22 +168,24 @@ function SignUp() {
           <div className="max-w-sm p-6 pt-1 pb-1">
             <input
               type="password"
-              id="first_name"
+              value={password}
+              onChange={(e) => handleChange(e, setPassword)}
               className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter your password "
-              required
-            />
-          </div>
-          <div className="max-w-sm p-6 pt-1 pb-1">
-            <input
-              type="text"
-              id="first_name"
-              className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Confirm your password"
+              placeholder="Enter your password"
               required
             />
           </div>
 
+          <div className="max-w-sm p-6 pt-1 pb-1">
+            <input
+              type="text"
+              value={confirmPassword}
+              onChange={(e) => handleChange(e, setConfirmPassword)}
+              className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-500 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Confirm password"
+              required
+            />
+          </div>
           <div
             className="max-w-sm p-6 pt-4 pb-4"
             style={{
@@ -145,6 +205,7 @@ function SignUp() {
 
           <div className="px-6">
             <button
+              onClick={handleSignUp}
               type="button"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full"
             >
@@ -159,7 +220,7 @@ function SignUp() {
             backgroundColor: "lightgreen",
             width: "50%",
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
+              "url('https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
