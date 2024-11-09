@@ -5,30 +5,9 @@ import { Button } from "@mui/material"; // Optionally you can use Material UI's 
 
 export default function Navbar({ toggleDrawer }) {
   return (
-    <nav className="bg-gray-100 shadow-md w-full px-4 py-2 flex items-center justify-between">
-      {/* Left Section: Menu Icon and Logo */}
-      <div className="flex items-center space-x-4">
-        {/* Menu Button */}
-        <img
-          src={Technovate_logo}
-          alt="logo"
-          className="w-20 h-20"
-        />
-
-        <Button
-          variant="text"
-          className="text-gray-600"
-          onClick={() => console.log("Go to ZeroWaste Kitchen")}
-        >
-          ZeroWaste Kitchen
-        </Button>
-      </div>
-
-      {/* Middle Section: Navigation Links */}
+    <nav className="bg-gray-100 mt-[2vh]  min-h-20 rounded-xl shadow-md w-full px-4 py-2 flex items-center justify-between">
       <div className="flex items-center space-x-8">
 
-
-        {/* Recipe's Dashboard Link */}
         <Button
           variant="text"
           className="text-gray-600"
@@ -37,7 +16,6 @@ export default function Navbar({ toggleDrawer }) {
           Recipe's
         </Button>
 
-        {/* Donate Link */}
         <Button
           variant="text"
           className="text-gray-600"
@@ -57,7 +35,6 @@ export default function Navbar({ toggleDrawer }) {
 
       </div>
 
-      {/* Right Section: Settings & User */}
       <div className="flex items-center space-x-5">
         <Button
           variant="contained"

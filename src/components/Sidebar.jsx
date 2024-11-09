@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
+import Technovate_logo from "../../src/assets/Technovate_logo.png"
 import { Drawer, Avatar, Button, Typography, Divider } from '@mui/material';
 import { FaSignOutAlt } from 'react-icons/fa';  // Import react-icons
 
 export default function Sidebar() {
   return (
-    <Drawer
+      <Drawer
       anchor="left"
       open={true}
       variant="persistent"
       ModalProps={{ keepMounted: true }}
       sx={{
         '& .MuiDrawer-paper': {
-          marginTop: '64px', // Account for any header/navbar
-          width: 250,        // Set the width of the sidebar
-          height: '100vh',   // Set the height to 100vh to make it full height
+          marginTop: '2vh', // Account for any header/navbar
+          marginLeft: '2vh', // Account for any header/navbar
+          width: 250,    // Set the width of the sidebar
+          height: '96vh',   // Set the height to 100vh to make it full height
           borderRight: 'none', // Remove right border
           backgroundColor: '#D4EAC7', // Light green background (you can adjust the color)
-          padding: 2,       
+          padding: 2,
+          borderRadius:6,
         },
       }}
       className="shadow-lg" // Add shadow to the sidebar for a better UI
     >
-      <div className="h-full w-full p-4">
+      <div className=" h-full w-full p-4">
         {/* Profile Section */}
-        <div className="flex items-center mb-6">
+        <div className="flex items-center justify-around mb-6">
           <Avatar
             alt="Profile Picture"
-            src="https://via.placeholder.com/150" // Replace with your image URL
+            src={Technovate_logo} // Replace with your image URL
             sx={{ width: 150, height: 150 }}
           />
         </div>
@@ -53,5 +56,6 @@ export default function Sidebar() {
         </Button>
       </div>
     </Drawer>
+    
   );
 }

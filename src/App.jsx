@@ -1,4 +1,3 @@
-import "./App.css";
 import NavHome from "./navigation/NavHome";
 
 function App() {
