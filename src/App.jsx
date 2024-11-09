@@ -1,11 +1,8 @@
-import './App.css'
-import NavHome from "./navigation/NavHome"
+import "./App.css";
+import NavHome from "./navigation/NavHome";
 
 function App() {
-
-  return (
-      <NavHome/ >
-  )
+  return <NavHome />;
 }
 
-export default App
+export default App;
