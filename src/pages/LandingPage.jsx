@@ -1,13 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from "react";
 
-import { motion } from 'framer-motion';
-import { MapPin, Calendar, Package } from "lucide-react"
-import { Card, CardContent, CardActions, Typography, Button, CardHeader, CardMedia, Badge, TextField } from '@mui/material';
-import { FaSearch, FaLeaf } from 'react-icons/fa'; // Corrected imports for icons
-import pasta from "../assets/pasta.png"
-import VideoSection from '../components/VideoSection';
+import { motion } from "framer-motion";
+import { MapPin, Calendar, Package } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  CardHeader,
+  CardMedia,
+  Badge,
+  TextField,
+} from "@mui/material";
+import { FaSearch, FaLeaf } from "react-icons/fa"; // Corrected imports for icons
+import pasta from "../assets/pasta.png";
+import VideoSection from "../components/VideoSection";
+
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
 
 // Dummy food items data
 const foodItems = [
@@ -17,7 +30,7 @@ const foodItems = [
     quantity: 20,
     expiryDate: "2023-07-15",
     location: "Farm Fresh Market",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
   {
     name: "Whole Grain Bread",
@@ -25,7 +38,7 @@ const foodItems = [
     quantity: 15,
     expiryDate: "2023-07-10",
     location: "City Bakery",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
   {
     name: "Mixed Fruit Basket",
@@ -33,7 +46,7 @@ const foodItems = [
     quantity: 25,
     expiryDate: "2023-07-12",
     location: "Local Farm",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
   {
     name: "Plant-based Protein Mix",
@@ -41,7 +54,7 @@ const foodItems = [
     quantity: 30,
     expiryDate: "2023-08-20",
     location: "Protein Co.",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
   {
     name: "Homemade Granola",
@@ -49,7 +62,7 @@ const foodItems = [
     quantity: 40,
     expiryDate: "2023-09-01",
     location: "Granola Hut",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
   {
     name: "Organic Eggs",
@@ -57,7 +70,7 @@ const foodItems = [
     quantity: 50,
     expiryDate: "2023-07-25",
     location: "Sunny Farms",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/placeholder.svg?height=200&width=200",
   },
 ];
 
@@ -66,16 +79,32 @@ export default function LandingPage() {
   const [requestedItems, setRequestedItems] = useState([]); // Keep this as an array of strings
 
   // Filter food items based on search term
-  const filteredItems = foodItems.filter(item =>
+  const filteredItems = foodItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleRequest = (itemName) => { // itemName is a string now, no TypeScript type annotation
-    setRequestedItems(prev => [...prev, itemName]);
+  const handleRequest = (itemName) => {
+    // itemName is a string now, no TypeScript type annotation
+    setRequestedItems((prev) => [...prev, itemName]);
   };
 
-  return (
+  const mapRef = useRef();
+  const mapContainerRef = useRef();
 
+  useEffect(() => {
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoidmluaXRtb2RpIiwiYSI6ImNseHlnNjYwbTAwZTEya3IyNW96M2d0ZHgifQ.vm0AB_lRtReDu3PskCcMFg";
+    mapRef.current = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-74.5, 40],
+      zoom: 9,
+    });
+
+  
+  }, []);
+
+  return (
     <>
       <VideoSection />
       <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
@@ -86,7 +115,9 @@ export default function LandingPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Typography variant="h4" gutterBottom color="primary">Zero Waste Kitchen</Typography>
+            <Typography variant="h4" gutterBottom color="primary">
+              Zero Waste Kitchen
+            </Typography>
             <Typography variant="h6" color="textSecondary" paragraph>
               Reducing food waste, one meal at a time
             </Typography>
@@ -96,8 +127,7 @@ export default function LandingPage() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
             className="flex justify-center items-center space-x-2 max-w-md mx-auto"
-          >
-          </motion.div>
+          ></motion.div>
         </header>
 
         {/* Main Content - Food Items */}
@@ -110,37 +140,37 @@ export default function LandingPage() {
           >
             {filteredItems.map((item, index) => (
               <motion.div
-              key={index}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: index * 0.1, duration: 0.3 }}
-              whileHover={{ scale: 1.03 }}
-            >
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                  borderRadius: "1.3em",
-                  padding: "1.5em",
-                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                }}
+                key={index}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: index * 0.1, duration: 0.3 }}
+                whileHover={{ scale: 1.03 }}
               >
-                <CardHeader
-                  title={item.name}
-                  subheader={item.description}
-                  action={<FaLeaf className="h-5 w-5 text-green-500" />}
-                  sx={{ paddingBottom: 0 }}
-                />
-                <CardMedia
-                  component="img"
-                  image={pasta}
-                  alt={item.name}
-                  height="200"
-                  sx={{ borderRadius: "1em", marginBottom: "1em" }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  {/* <Typography
+                <Card
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    borderRadius: "1.3em",
+                    padding: "1.5em",
+                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <CardHeader
+                    title={item.name}
+                    subheader={item.description}
+                    action={<FaLeaf className="h-5 w-5 text-green-500" />}
+                    sx={{ paddingBottom: 0 }}
+                  />
+                  <CardMedia
+                    component="img"
+                    image={pasta}
+                    alt={item.name}
+                    height="200"
+                    sx={{ borderRadius: "1em", marginBottom: "1em" }}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    {/* <Typography
                     variant="body2"
                     className="flex items-center gap-2 mb-2"
                   >
@@ -156,51 +186,55 @@ export default function LandingPage() {
                     </Typography>
                   </div> */}
 
-<div className="p-0 space-y-4">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0 " />
-              <span className="text-sm line-clamp-1">123 Garden Street, Green Valley, CA 94123 </span>
-            </div>
-            <div className='w-full h-[1px] bg-gray-300 '></div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2">
-                <Package className="w-4 h-4 text-emerald-600" />
-                <div>
-                  <p className="text-sm font-medium">Quantity</p>
-                  <p className="text-sm">20 available</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-emerald-600" />
-                <div>
-                  <p className="text-sm font-medium">Best before</p>
-                  <p className="text-sm">2023-07-15</p>
-                </div>
-              </div>
-            </div>
-            <div className='w-full h-[1px] bg-gray-300 '></div>
-            <div className="flex gap-2">
-              {/* <Badge variant="secondary">Vegan</Badge>
+                    <div className="p-0 space-y-4">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0 " />
+                        <span className="text-sm line-clamp-1">
+                          123 Garden Street, Green Valley, CA 94123{" "}
+                        </span>
+                      </div>
+                      <div className="w-full h-[1px] bg-gray-300 "></div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-emerald-600" />
+                          <div>
+                            <p className="text-sm font-medium">Quantity</p>
+                            <p className="text-sm">20 available</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-emerald-600" />
+                          <div>
+                            <p className="text-sm font-medium">Best before</p>
+                            <p className="text-sm">2023-07-15</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-full h-[1px] bg-gray-300 "></div>
+                      <div className="flex gap-2">
+                        {/* <Badge variant="secondary">Vegan</Badge>
               <Badge variant="secondary">Organic</Badge> */}
-            </div>
-          </div>
-                </CardContent>
-            
-                <CardActions sx={{ justifyContent: "center", paddingTop: 0 }}>
-                  <Button
-                    variant="outlined"
-                    className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200"
-                    size="large"
-                  >
-                    <MapPin className="w-4 h-4 mr-2" />
-                    View location on map
-                  </Button>
-                </CardActions>
-              </Card>
-            </motion.div>
-            
+                      </div>
+                    </div>
+                  </CardContent>
+
+                  <CardActions sx={{ justifyContent: "center", paddingTop: 0 }}>
+                    <Button
+                      variant="outlined"
+                      className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200"
+                      size="large"
+                    >
+                      <MapPin className="w-4 h-4 mr-2" />
+                      View location on map
+                    </Button>
+                  </CardActions>
+                </Card>
+              </motion.div>
             ))}
           </motion.div>
+
+          <div id="map-container" ref={mapContainerRef} />
+
         </main>
 
         {/* Footer Section */}
