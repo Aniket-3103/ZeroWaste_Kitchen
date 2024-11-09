@@ -100,8 +100,6 @@ export default function LandingPage() {
       center: [-74.5, 40],
       zoom: 9,
     });
-
-  
   }, []);
 
   return (
@@ -234,7 +232,6 @@ export default function LandingPage() {
           </motion.div>
 
           <div id="map-container" ref={mapContainerRef} />
-
         </main>
 
         {/* Footer Section */}
