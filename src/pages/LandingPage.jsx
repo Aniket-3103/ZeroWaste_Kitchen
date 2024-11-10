@@ -22,61 +22,67 @@ import VideoSection from "../components/VideoSection";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 
-// Dummy food items data
-const foodItems = [
-  {
-    name: "Organic Vegetables",
-    description: "Fresh, locally sourced organic vegetable mix",
-    quantity: 20,
-    expiryDate: "2023-07-15",
-    location: "Farm Fresh Market",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Whole Grain Bread",
-    description: "Freshly baked whole grain bread loaves",
-    quantity: 15,
-    expiryDate: "2023-07-10",
-    location: "City Bakery",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Mixed Fruit Basket",
-    description: "Assortment of seasonal fruits",
-    quantity: 25,
-    expiryDate: "2023-07-12",
-    location: "Local Farm",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Plant-based Protein Mix",
-    description: "Assorted plant-based protein sources",
-    quantity: 30,
-    expiryDate: "2023-08-20",
-    location: "Protein Co.",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Homemade Granola",
-    description: "Crunchy granola with nuts and dried fruits",
-    quantity: 40,
-    expiryDate: "2023-09-01",
-    location: "Granola Hut",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Organic Eggs",
-    description: "Farm-fresh organic eggs",
-    quantity: 50,
-    expiryDate: "2023-07-25",
-    location: "Sunny Farms",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-];
+import useFoodItems from "../hooks/useFoodItems";
+
+// const foodItems = [
+//   {
+//     name: "Organic Vegetables",
+//     description: "Fresh, locally sourced organic vegetable mix",
+//     quantity: 20,
+//     expiryDate: "2023-07-15",
+//     location: "Farm Fresh Market",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+//   {
+//     name: "Whole Grain Bread",
+//     description: "Freshly baked whole grain bread loaves",
+//     quantity: 15,
+//     expiryDate: "2023-07-10",
+//     location: "City Bakery",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+//   {
+//     name: "Mixed Fruit Basket",
+//     description: "Assortment of seasonal fruits",
+//     quantity: 25,
+//     expiryDate: "2023-07-12",
+//     location: "Local Farm",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+//   {
+//     name: "Plant-based Protein Mix",
+//     description: "Assorted plant-based protein sources",
+//     quantity: 30,
+//     expiryDate: "2023-08-20",
+//     location: "Protein Co.",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+//   {
+//     name: "Homemade Granola",
+//     description: "Crunchy granola with nuts and dried fruits",
+//     quantity: 40,
+//     expiryDate: "2023-09-01",
+//     location: "Granola Hut",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+//   {
+//     name: "Organic Eggs",
+//     description: "Farm-fresh organic eggs",
+//     quantity: 50,
+//     expiryDate: "2023-07-25",
+//     location: "Sunny Farms",
+//     image: "/placeholder.svg?height=200&width=200",
+//   },
+// ];
 
 export default function LandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
   const [requestedItems, setRequestedItems] = useState([]); // Keep this as an array of strings
+
+  const [foodItems, setFoodItems] = useState([]);
+
+  const { fetchFoodItems } = useFoodItems();
 
   // Filter food items based on search term
   const filteredItems = foodItems.filter((item) =>
@@ -90,6 +96,18 @@ export default function LandingPage() {
 
   const mapRef = useRef();
   const mapContainerRef = useRef();
+
+  const getFoodItems = async () => {
+    setLoading(true);
+    let foodItemsFetched = await fetchFoodItems();
+
+    if (foodItemsFetched == null) {
+      foodItemsFetched = [];
+    }
+    setFoodItems(foodItemsFetched);
+
+    setLoading(false);
+  };
 
   useEffect(() => {
     mapboxgl.accessToken =
