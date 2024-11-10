@@ -1,5 +1,8 @@
-import { Button, Select, MenuItem, Typography, Box, LinearProgress } from "@mui/material";
+import * as React from 'react';
+
+import { Button, Menu, Select, MenuItem, Typography, Box, LinearProgress } from "@mui/material";
 import AddFood from "../food/AddFood";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 export default function DashboardFoodItems() {
   const problems= [
@@ -47,25 +50,64 @@ export default function DashboardFoodItems() {
     },
   ];
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box className="mt-[4vh] ]">
       <Box className="mx-auto space-y-6">
         <Box display="flex" justifyContent="space-between" alignItems="center">
 
-          <Box display="flex" gap={1}>
-            <Button variant="contained" size="small" className="w-24 h-10">
-              Available
-            </Button>
-            <Button variant="outlined" size="small" className="w-24 h-10">
-              Donated
-            </Button>
-            <Button variant="outlined" size="small" className="w-24 h-10">
-              Expired
-            </Button>
-            <Button variant="outlined" size="small" className="w-24 h-10">
-              Consumed
-            </Button>
-          </Box>
+        <div className="md:hidden">
+          <Button
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            variant='contained'
+            size='large'
+            className=' '
+          >
+            <BsThreeDotsVertical className='w-4 h-4'/>
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Available</MenuItem>
+            <MenuItem onClick={handleClose}>Donated</MenuItem>
+            <MenuItem onClick={handleClose}>Expired</MenuItem>
+            <MenuItem onClick={handleClose}>consumed</MenuItem>
+          </Menu>
+        </div>
+          <div className="hidden md:block ">
+            <Box display="flex" gap={1}>
+              <Button variant="contained" size="small" className="w-24 h-10">
+                Available
+              </Button>
+              <Button variant="outlined" size="small" className="w-24 h-10">
+                Donated
+              </Button>
+              <Button variant="outlined" size="small" className="w-24 h-10">
+                Expired
+              </Button>
+              <Button variant="outlined" size="small" className="w-24 h-10">
+                Consumed
+              </Button>
+            </Box>
+          </div>
           <Box>
             <AddFood/>
           </Box>
