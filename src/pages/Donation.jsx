@@ -12,11 +12,12 @@ function Donation() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const foodRes = await axios.get('http://localhost:5000/api/foodItems/:ownerId');  
-        const ngosRes = await axios.get('http://localhost:5000/getNgos');
+        console.log(localStorage.getItem("user")._id);
+        const foodRes = await axios.get(`http://localhost:5000/api/foodItems/${localStorage.getItem("user")._id}`);  
+        // const ngosRes = await axios.get('http://localhost:5000/getNgos');
         console.log(foodRes.data) 
         setFoodItems(foodRes.data);
-        setNgos(ngosRes.data);
+        // setNgos(ngosRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
