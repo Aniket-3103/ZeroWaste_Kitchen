@@ -32,7 +32,7 @@ function LoginPage() {
     const response = await login(payload);
 
     setLoading(true);
-    if (response) {
+    if (response != null) {
       if (response?.user) {
         navigate("/dashboard");
         toastSuccess("Logged in successfully");
