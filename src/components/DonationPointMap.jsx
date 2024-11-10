@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
-import { MapPin } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import { MapPin } from "lucide-react";
 
-const MAPBOX_TOKEN = 'your-mapbox-access-token'; // Add your Mapbox access token here
+const MAPBOX_TOKEN = "your-mapbox-access-token";
 
 const DonationPointMap = () => {
   const [viewport, setViewport] = useState({
-    latitude: 37.7749, // Default to San Francisco
+    latitude: 37.7749,
     longitude: -122.4194,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     zoom: 12,
   });
   const [userLocation, setUserLocation] = useState(null);
   const [showPopup, setShowPopup] = useState(true);
-  const [donationPoints, setDonationPoints] = useState([]); // Store all markers' locations
+  const [donationPoints, setDonationPoints] = useState([]);
 
   // Function to generate random coordinates near the user's location
   const generateRandomCoordinates = (lat, lon) => {
-    const randomLat = (Math.random() - 0.5) / 100;  // Generate a random value within 0.01 degrees
-    const randomLon = (Math.random() - 0.5) / 100;  // Generate a random value within 0.01 degrees
+    const randomLat = (Math.random() - 0.5) / 100; // Generate a random value within 0.01 degrees
+    const randomLon = (Math.random() - 0.5) / 100; // Generate a random value within 0.01 degrees
 
     return {
       latitude: lat + randomLat,
@@ -56,7 +56,7 @@ const DonationPointMap = () => {
         }
       );
     } else {
-      console.log('Geolocation is not supported by this browser.');
+      console.log("Geolocation is not supported by this browser.");
     }
   }, []);
 
@@ -66,14 +66,28 @@ const DonationPointMap = () => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       {/* Header Section */}
-      <div style={{ margin: '30px 0', fontSize: '34px', fontWeight: '900', color: 'green' }}>
+      <div
+        style={{
+          margin: "30px 0",
+          fontSize: "34px",
+          fontWeight: "900",
+          color: "green",
+        }}
+      >
         Nearby Donation Points
       </div>
 
       {/* Map Container */}
-      <div style={{ position: 'relative', width: '90%', height: '80%' }}> 
+      <div style={{ position: "relative", width: "90%", height: "80%" }}>
         <ReactMapGL
           {...viewport}
           mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -81,18 +95,21 @@ const DonationPointMap = () => {
           mapStyle="mapbox://styles/mapbox/streets-v11"
         >
           {/* Add the marker at the user's location */}
-          <Marker latitude={userLocation.latitude} longitude={userLocation.longitude}>
+          <Marker
+            latitude={userLocation.latitude}
+            longitude={userLocation.longitude}
+          >
             <div
               style={{
-                backgroundColor: 'red',
-                padding: '10px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                transition: 'transform 0.3s ease', // Add hover effect
+                backgroundColor: "red",
+                padding: "10px",
+                borderRadius: "50%",
+                cursor: "pointer",
+                transition: "transform 0.3s ease", // Add hover effect
               }}
               onClick={() => setShowPopup(true)} // Show popup when user marker is clicked
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'} // Hover effect
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Hover effect
+              onMouseEnter={(e) => (e.target.style.transform = "scale(1.2)")} // Hover effect
+              onMouseLeave={(e) => (e.target.style.transform = "scale(1)")} // Hover effect
             >
               <span role="img" aria-label="donation-point">
                 <MapPin />
@@ -109,15 +126,15 @@ const DonationPointMap = () => {
             >
               <div
                 style={{
-                  backgroundColor: 'green',
-                  padding: '10px',
-                  borderRadius: '50%',
-                  cursor: 'pointer',
-                  transition: 'transform 0.3s ease', // Add hover effect
+                  backgroundColor: "green",
+                  padding: "10px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  transition: "transform 0.3s ease", // Add hover effect
                 }}
                 onClick={() => setShowPopup(true)} // Show popup when any marker is clicked
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'} // Hover effect
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Hover effect
+                onMouseEnter={(e) => (e.target.style.transform = "scale(1.2)")} // Hover effect
+                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")} // Hover effect
               >
                 <span role="img" aria-label="donation-point">
                   <MapPin />

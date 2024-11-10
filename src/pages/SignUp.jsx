@@ -61,6 +61,8 @@ function SignUp() {
 
     const response = await register(payload);
 
+    console.log(response);
+
     if (response.user) {
       navigateToLoginPage();
       toastSuccess("Registration Successful");
