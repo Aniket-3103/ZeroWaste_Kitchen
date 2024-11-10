@@ -1,7 +1,4 @@
-"use client";
-
 import { useState, useRef, useEffect } from "react";
-
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Package } from "lucide-react";
 import {
@@ -12,28 +9,26 @@ import {
   Button,
   CardHeader,
   CardMedia,
-  Badge,
-  TextField,
 } from "@mui/material";
-import { FaSearch, FaLeaf } from "react-icons/fa"; // Corrected imports for icons
+import { FaLeaf } from "react-icons/fa";
 import pasta from "../assets/pasta.png";
 import VideoSection from "../components/VideoSection";
-
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import DonationPointMap from "../components/DonationPointMap";
 import Footer from "../components/Footer";
-
 import useFoodItems from "../hooks/useFoodItems";
+import { useNavigate } from "react-router-dom"; // Use this for navigation
 
 export default function LandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [requestedItems, setRequestedItems] = useState([]);
-
   const [foodItems, setFoodItems] = useState([]);
-
   const { fetchFoodItems } = useFoodItems();
+  const mapRef = useRef();
+  const mapContainerRef = useRef();
+  const navigate = useNavigate(); // For navigation
 
   const filteredItems =
     foodItems && foodItems.length > 0
@@ -42,23 +37,10 @@ export default function LandingPage() {
         )
       : [];
 
-  const handleRequest = (itemName) => {
-    setRequestedItems((prev) => [...prev, itemName]);
-  };
-
-  const mapRef = useRef();
-  const mapContainerRef = useRef();
-
   const getFoodItems = async () => {
     setLoading(true);
     let foodItemsFetched = await fetchFoodItems();
-
-    console.log(foodItemsFetched);
-
-    if (foodItemsFetched == null) {
-      foodItemsFetched = [];
-    }
-    setFoodItems(foodItemsFetched);
+    setFoodItems(foodItemsFetched || []);
     setLoading(false);
   };
 
@@ -79,7 +61,17 @@ export default function LandingPage() {
       <VideoSection />
       <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
         {/* Header Section */}
-        <header className="text-center py-12 bg-white shadow-md">
+
+        <div className="fixed top-2 right-2 z-20">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </Button>
+          </div>
+        <header className="relative text-center py-12 bg-white shadow-md">
           <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -92,16 +84,14 @@ export default function LandingPage() {
               Reducing food waste, one meal at a time
             </Typography>
           </motion.div>
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="flex justify-center items-center space-x-2 max-w-md mx-auto"
-          ></motion.div>
+
+          {/* Login Button */}
+          
         </header>
 
         {/* Main Content - Food Items */}
         <main className="container mx-auto px-4 py-8">
+          {/* Food Item Cards */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -137,6 +127,7 @@ export default function LandingPage() {
                     image={item?.imageUrl || pasta}
                     alt={item.name}
                     height="200"
+                    className="aspect-square"
                     sx={{ borderRadius: "1em", marginBottom: "1em" }}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
@@ -144,7 +135,7 @@ export default function LandingPage() {
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0 " />
                         <span className="text-sm line-clamp-1">
-                          123 Garden Street, Green Valley, CA 94123{" "}
+                          123 Garden Street, Green Valley, CA 94123
                         </span>
                       </div>
                       <div className="w-full h-[1px] bg-gray-300 "></div>
@@ -164,21 +155,18 @@ export default function LandingPage() {
                           </div>
                         </div>
                       </div>
-                      <div className="w-full h-[1px] bg-gray-300 "></div>
-                      <div className="flex gap-2"></div>
                     </div>
                   </CardContent>
-
                   <CardActions sx={{ justifyContent: "center", paddingTop: 0 }}>
-                  <a
-  href="https://www.google.com/maps/place/19%C2%B007'15.5%22N+72%C2%B050'01.1%22E/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200 p-2 flex items-center justify-center"
->
-  <MapPin className="w-4 h-4 mr-2" />
-  View location on map
-</a>
+                    <a
+                      href="https://www.google.com/maps/place/19%C2%B007'15.5%22N+72%C2%B050'01.1%22E/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200 p-2 flex items-center justify-center"
+                    >
+                      <MapPin className="w-4 h-4 mr-2" />
+                      View location on map
+                    </a>
                   </CardActions>
                 </Card>
               </motion.div>
@@ -189,8 +177,6 @@ export default function LandingPage() {
         </main>
 
         <DonationPointMap />
-
-        {/* Footer Section */}
         <Footer />
       </div>
     </>
