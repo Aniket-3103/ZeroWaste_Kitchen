@@ -39,9 +39,11 @@ function LoginPage() {
     if (response) {
       if (response?.user) {
         toastSuccess("Logged in successfully");
+        localStorage.setItem('user', JSON.stringify(response.user));
         resetValues();
 
         addUser(response.user, response.token, url);
+        
         setLoading(false);
         navigateToDashboardPage();
         return;
