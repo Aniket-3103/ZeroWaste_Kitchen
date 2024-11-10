@@ -6,6 +6,7 @@ import Recipe from "../pages/Recipe";
 import LandingPage from "../pages/LandingPage";
 import { LoginPage } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
+import Donation from "../pages/Donation";
 
 function NavHome() {
   //if user is logged in
@@ -18,6 +19,7 @@ function NavHome() {
       <Route path="/recipe" element={<Recipe/>}/>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/donate" element={<Donation />} />
     </Routes>
   );
 }

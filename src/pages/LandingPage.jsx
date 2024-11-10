@@ -31,7 +31,7 @@ const foodItems = [
     description: "Fresh, locally sourced organic vegetable mix",
     quantity: 20,
     expiryDate: "2023-07-15",
-    location: "Farm Fresh Market",
+    location: "Andheri",
     image: "/placeholder.svg?height=200&width=200",
   },
   {
@@ -39,7 +39,7 @@ const foodItems = [
     description: "Freshly baked whole grain bread loaves",
     quantity: 15,
     expiryDate: "2023-07-10",
-    location: "City Bakery",
+    location: "Jogeshwari",
     image: "/placeholder.svg?height=200&width=200",
   },
   {
@@ -47,7 +47,7 @@ const foodItems = [
     description: "Assortment of seasonal fruits",
     quantity: 25,
     expiryDate: "2023-07-12",
-    location: "Local Farm",
+    location: "Malad",
     image: "/placeholder.svg?height=200&width=200",
   },
   {
@@ -55,7 +55,7 @@ const foodItems = [
     description: "Assorted plant-based protein sources",
     quantity: 30,
     expiryDate: "2023-08-20",
-    location: "Protein Co.",
+    location: "Azad Nagar, Andheri",
     image: "/placeholder.svg?height=200&width=200",
   },
   {
@@ -63,7 +63,7 @@ const foodItems = [
     description: "Crunchy granola with nuts and dried fruits",
     quantity: 40,
     expiryDate: "2023-09-01",
-    location: "Granola Hut",
+    location: "Seven Hills, Andheri",
     image: "/placeholder.svg?height=200&width=200",
   },
   {
@@ -71,7 +71,7 @@ const foodItems = [
     description: "Farm-fresh organic eggs",
     quantity: 50,
     expiryDate: "2023-07-25",
-    location: "Sunny Farms",
+    location: "Bandra",
     image: "/placeholder.svg?height=200&width=200",
   },
 ];
@@ -203,14 +203,15 @@ export default function LandingPage() {
                   </CardContent>
 
                   <CardActions sx={{ justifyContent: "center", paddingTop: 0 }}>
-                    <Button
-                      variant="outlined"
-                      className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200"
-                      size="large"
-                    >
-                      <MapPin className="w-4 h-4 mr-2" />
-                      View location on map
-                    </Button>
+                  <a
+  href="https://www.google.com/maps/place/19%C2%B007'15.5%22N+72%C2%B050'01.1%22E/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200 p-2 flex items-center justify-center"
+>
+  <MapPin className="w-4 h-4 mr-2" />
+  View location on map
+</a>
                   </CardActions>
                 </Card>
               </motion.div>
