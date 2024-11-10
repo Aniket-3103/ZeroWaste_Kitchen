@@ -21,6 +21,8 @@ import VideoSection from "../components/VideoSection";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
+import DonationPointMap from "../components/DonationPointMap";
+import Footer from "../components/Footer";
 
 import useFoodItems from "../hooks/useFoodItems";
 
@@ -186,21 +188,6 @@ export default function LandingPage() {
                     sx={{ borderRadius: "1em", marginBottom: "1em" }}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    {/* <Typography
-                    variant="body2"
-                    className="flex items-center gap-2 mb-2"
-                  >
-                    <MapPin className="w-4 h-4 text-green-600" />
-                    123 Garden Street, Green Valley, CA 94123
-                  </Typography>
-                  <div className="flex justify-between items-center mb-4">
-                    <Typography variant="body2" className="flex items-center gap-2">
-                      <span className="font-semibold">Quantity:</span> {item.quantity} available
-                    </Typography>
-                    <Typography variant="body2" className="flex items-center gap-2">
-                      <span className="font-semibold">Best before:</span> {item.expiryDate}
-                    </Typography>
-                  </div> */}
 
                     <div className="p-0 space-y-4">
                       <div className="flex items-center gap-2">
@@ -228,8 +215,7 @@ export default function LandingPage() {
                       </div>
                       <div className="w-full h-[1px] bg-gray-300 "></div>
                       <div className="flex gap-2">
-                        {/* <Badge variant="secondary">Vegan</Badge>
-              <Badge variant="secondary">Organic</Badge> */}
+                        
                       </div>
                     </div>
                   </CardContent>
@@ -252,14 +238,10 @@ export default function LandingPage() {
           <div id="map-container" ref={mapContainerRef} />
         </main>
 
+        <DonationPointMap />
+
         {/* Footer Section */}
-        <footer className="bg-white py-6 mt-12">
-          <div className="container mx-auto px-4 text-center text-muted-foreground">
-            <Typography variant="body2" color="textSecondary">
-              &copy; 2023 Zero Waste Kitchen. All rights reserved.
-            </Typography>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );
