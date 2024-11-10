@@ -1,5 +1,5 @@
 import { Button, Select, MenuItem, Typography, Box, LinearProgress } from "@mui/material";
-import { Download, Lock, Plus } from "lucide-react";
+import AddFood from "../food/AddFood";
 
 export default function DashboardFoodItems() {
   const problems= [
@@ -67,9 +67,7 @@ export default function DashboardFoodItems() {
             </Button>
           </Box>
           <Box>
-            <Button variant="contained" size="small" className="w-32 h-10">
-              <Plus className="h-6 w-6 mr-2"/> Add Food
-            </Button>
+            <AddFood/>
           </Box>
         </Box>
 
