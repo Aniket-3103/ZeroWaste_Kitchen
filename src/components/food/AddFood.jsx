@@ -26,15 +26,16 @@ export default function AddFood() {
     const formJson = Object.fromEntries(formData.entries());
     
     const user = JSON.parse(localStorage.getItem('user')); // Get user object from local storage
-    const userId = user ? user.id : null; // Extract user ID from the user object
-
+    const userId = user ? user._id : null; // Extract user ID from the user object
+    console.log(user);
     // Prepare the data to send
     const dataToSend = {
-      name: formJson.name,
+      foodItemName: formJson.name,
       quantity: Number(formJson.quantity),
       expiry: new Date(formJson.expiry),
       owner: userId, // Replace with actual owner value
-      description: "", // Replace with actual description value
+      description: "description", // Replace with actual description value
+      imageUrl:formJson.image||"",
     };
 
     try {
@@ -98,6 +99,18 @@ export default function AddFood() {
             fullWidth
             variant="standard"
           />
+
+        <TextField
+            required
+            margin="dense"
+            id="image"
+            name="image"
+            label="Image Url"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
         <div className='h-6'></div>
 
         <span className='mt-4 mb-2'>Entery Expiry Date:</span>
