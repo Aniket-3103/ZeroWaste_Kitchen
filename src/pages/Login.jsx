@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import { toastError, toastSuccess } from "../components/notifications";
-import { useAuthContext } from "../contexts/authContext";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
-  const { addUser } = useAuthContext();
+  // const { addUser } = useAuthContext();
 
   const navigateToSignupPage = () => {
     navigate("/sign-up");
@@ -43,7 +42,7 @@ function LoginPage() {
         toastSuccess("Logged in successfully");
         resetValues();
 
-        addUser(response.user, response.token, url);
+        // addUser(response.user, response.token, url);
         setLoading(false);
         navigateToDashboardPage();
         return;
