@@ -23,7 +23,7 @@ const useFoodItems = () => {
       if (ownerId == null) {
         return;
       }
-      const response = await api.get(`/api/fooditems/${ownerId}`, data);
+      const response = await api.get(`/api/fooditems/${ownerId}`);
 
       if (response?.data) {
         const data = response.data;
