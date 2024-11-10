@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
@@ -12,6 +12,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
+  // const { addUser } = useAuthContext();
 
   const navigateToSignupPage = () => {
     navigate("/sign-up");
@@ -42,8 +43,7 @@ function LoginPage() {
         localStorage.setItem('user', JSON.stringify(response.user));
         resetValues();
 
-        addUser(response.user, response.token, url);
-        
+        // addUser(response.user, response.token, url);
         setLoading(false);
         navigateToDashboardPage();
         return;
