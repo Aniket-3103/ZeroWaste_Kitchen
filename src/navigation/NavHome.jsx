@@ -7,6 +7,7 @@ import LandingPage from "../pages/LandingPage";
 import { LoginPage } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { useEffect } from "react";
+import Donation from "../pages/Donation";
 
 function NavHome() {
   return (
@@ -16,6 +17,7 @@ function NavHome() {
       <Route path="/recipe" element={<Recipe />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/donate" element={<Donation />} />
     </Routes>
   );
 }

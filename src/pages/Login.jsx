@@ -37,6 +37,7 @@ function LoginPage() {
         navigate("/dashboard");
         toastSuccess("Logged in successfully");
         localStorage.setItem("user", JSON.stringify(response.user));
+        resetValues();
 
         setLoading(false);
       } else {
