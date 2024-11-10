@@ -9,21 +9,31 @@ import { AiFillAppstore } from "react-icons/ai";
 import Technovate_logo from "../../src/assets/Technovate_logo.png";
 import { Button } from "@mui/material"; // Optionally you can use Material UI's Button for better design
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import { useEffect, useState } from "react";
 
 export default function Navbar({ toggleDrawer }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const isAuth = user != null;
-
+  const [openSideBar, setOpenSideBar] = useState(false);
+  const [counter, setCounter] = useState(1);
+  useEffect(()=>{
+    setOpenSideBar(false);
+  },[counter])
   return (
     <nav className="bg-gray-100 mt-[2vh]  min-h-20 rounded-xl shadow-md w-full px-4 py-2 flex items-center justify-between">
       <div className="flex items-center space-x-0 md:space-x-8">
         <Button
           variant="text"
           className="text-gray-600 p-2 !min-w-6"
-          onClick={() => {}}
+          onClick={() => {setOpenSideBar(true)}}
         >
           <GiHamburgerMenu className="md:hidden w-6 h-6"/>
+          <div className={`fixed left-0 top-0 h-screen w-screen bg-gray-300  z-10 opacity-40 ${openSideBar?"block":"hidden"}`}
+            onClick={()=>{ console.log("damnd"); setCounter(counter+1);}}
+          ></div>
+          <div className={`z-20 `}><Sidebar isOpen={openSideBar}/></div>
         </Button>
 
         <Button
