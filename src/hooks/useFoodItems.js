@@ -3,7 +3,7 @@ import api from "../constants/api";
 const useFoodItems = () => {
   const fetchFoodItems = async () => {
     try {
-      const response = await api.get("/api/fooditems", data);
+      const response = await api.get("/api/fooditems");
 
       if (response?.data) {
         const data = response.data;

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import { toastError, toastSuccess } from "../components/notifications";
+import { useAuthContext } from "../contexts/authContext";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
+  const { addUser } = useAuthContext();
 
   const navigateToSignupPage = () => {
     navigate("/sign-up");

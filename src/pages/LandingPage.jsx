@@ -26,73 +26,23 @@ import Footer from "../components/Footer";
 
 import useFoodItems from "../hooks/useFoodItems";
 
-// const foodItems = [
-//   {
-//     name: "Organic Vegetables",
-//     description: "Fresh, locally sourced organic vegetable mix",
-//     quantity: 20,
-//     expiryDate: "2023-07-15",
-//     location: "Farm Fresh Market",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-//   {
-//     name: "Whole Grain Bread",
-//     description: "Freshly baked whole grain bread loaves",
-//     quantity: 15,
-//     expiryDate: "2023-07-10",
-//     location: "City Bakery",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-//   {
-//     name: "Mixed Fruit Basket",
-//     description: "Assortment of seasonal fruits",
-//     quantity: 25,
-//     expiryDate: "2023-07-12",
-//     location: "Local Farm",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-//   {
-//     name: "Plant-based Protein Mix",
-//     description: "Assorted plant-based protein sources",
-//     quantity: 30,
-//     expiryDate: "2023-08-20",
-//     location: "Protein Co.",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-//   {
-//     name: "Homemade Granola",
-//     description: "Crunchy granola with nuts and dried fruits",
-//     quantity: 40,
-//     expiryDate: "2023-09-01",
-//     location: "Granola Hut",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-//   {
-//     name: "Organic Eggs",
-//     description: "Farm-fresh organic eggs",
-//     quantity: 50,
-//     expiryDate: "2023-07-25",
-//     location: "Sunny Farms",
-//     image: "/placeholder.svg?height=200&width=200",
-//   },
-// ];
-
 export default function LandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [requestedItems, setRequestedItems] = useState([]); // Keep this as an array of strings
+  const [requestedItems, setRequestedItems] = useState([]);
 
   const [foodItems, setFoodItems] = useState([]);
 
   const { fetchFoodItems } = useFoodItems();
 
-  // Filter food items based on search term
-  const filteredItems = foodItems.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredItems =
+    foodItems && foodItems.length > 0
+      ? foodItems.filter((item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : [];
 
   const handleRequest = (itemName) => {
-    // itemName is a string now, no TypeScript type annotation
     setRequestedItems((prev) => [...prev, itemName]);
   };
 
@@ -103,11 +53,12 @@ export default function LandingPage() {
     setLoading(true);
     let foodItemsFetched = await fetchFoodItems();
 
+    console.log(foodItemsFetched);
+
     if (foodItemsFetched == null) {
       foodItemsFetched = [];
     }
     setFoodItems(foodItemsFetched);
-
     setLoading(false);
   };
 
@@ -120,6 +71,7 @@ export default function LandingPage() {
       center: [-74.5, 40],
       zoom: 9,
     });
+    getFoodItems();
   }, []);
 
   return (
@@ -182,13 +134,12 @@ export default function LandingPage() {
                   />
                   <CardMedia
                     component="img"
-                    image={pasta}
+                    image={item?.imageUrl || pasta}
                     alt={item.name}
                     height="200"
                     sx={{ borderRadius: "1em", marginBottom: "1em" }}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-
                     <div className="p-0 space-y-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0 " />
@@ -214,9 +165,7 @@ export default function LandingPage() {
                         </div>
                       </div>
                       <div className="w-full h-[1px] bg-gray-300 "></div>
-                      <div className="flex gap-2">
-                        
-                      </div>
+                      <div className="flex gap-2"></div>
                     </div>
                   </CardContent>
 
@@ -241,7 +190,7 @@ export default function LandingPage() {
         <DonationPointMap />
 
         {/* Footer Section */}
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
