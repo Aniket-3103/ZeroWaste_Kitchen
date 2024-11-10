@@ -11,8 +11,8 @@ import { useEffect } from "react";
 function NavHome() {
   return (
     <Routes>
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/" element={<LandingPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/recipe" element={<Recipe />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/sign-up" element={<SignUp />} />
