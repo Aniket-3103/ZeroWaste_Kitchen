@@ -50,8 +50,8 @@ const Recipe = () => {
 
   return (
     <div className="flex justify-start h-screen w-full">
-      <Sidebar />
-      <div className="md:ml-[calc(250px+4vh)] grow flex flex-col mr-[2vh]">
+      <div className="hidden md:block"><Sidebar /></div>
+      <div className="md:ml-[calc(250px+4vh)] ml-[2vh] grow flex flex-col mr-[2vh]">
         <Header />
         <div className="my-[2vh] rounded-2xl w-full h-full">
           <Box mb={3} display={"flex"} justifyContent={"space-between"}>
@@ -59,9 +59,11 @@ const Recipe = () => {
               <TypeIt options={{ speed: 50 }}>Your Food Inventory</TypeIt>
             </Typography>
 
-            <Button variant="contained" color="primary" onClick={suggestRecipe}>
-              Suggest Recipe
-            </Button>
+            <div className='hidden md:block'>
+              <Button variant="contained" color="primary" onClick={suggestRecipe}>
+                Suggest Recipe
+              </Button>
+            </div>
           </Box>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,6 +76,12 @@ const Recipe = () => {
             </Card>
 
             {/* Recipe Suggestion Card */}
+            <div className='md:hidden'>
+              <Button variant="contained" color="primary" onClick={suggestRecipe}>
+                Suggest Recipe
+              </Button>
+            </div>
+
             <Card>
               <CardContent>
                 <Typography variant="h6">Suggested Recipe:</Typography>

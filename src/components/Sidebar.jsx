@@ -27,11 +27,11 @@ const achievements = [
   },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({isOpen}) {
   return (
       <Drawer
       anchor="left"
-      open={true}
+      open={isOpen??true}
       variant="persistent"
       ModalProps={{ keepMounted: true }}
       sx={{
