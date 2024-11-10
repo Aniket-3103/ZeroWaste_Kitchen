@@ -9,9 +9,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { Plus } from "lucide-react";
 import { toastSuccess } from "../notifications";
-export default function AddFood() {
+export default function AddFood({ addFood }) {
   const [open, setOpen] = React.useState(false);
-  console.log();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,7 +30,7 @@ export default function AddFood() {
       return;
     }
     const userId = user ? user._id : null; // Extract user ID from the user object
-    console.log(user);
+
     const dataToSend = {
       foodItemName: formJson.name,
       quantity: Number(formJson.quantity),
@@ -53,6 +52,20 @@ export default function AddFood() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
+      const addedFoodItem = {
+        id: response?.id ?? "",
+        name: formJson.name,
+        quantity: Number(formJson.quantity),
+        description: "description",
+        imageUrl: formJson.image || "",
+        expiry: new Date(formJson.expiry),
+        owner: userId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      addFood(addedFoodItem);
 
       // Handle successful response
       toastSuccess("Food item added successfully");

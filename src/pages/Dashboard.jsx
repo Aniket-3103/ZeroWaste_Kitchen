@@ -7,12 +7,19 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 import useFoodItems from "../hooks/useFoodItems";
+import { CircularProgress } from "@mui/material";
 
 function Dashboard() {
   const [foodItems, setFoodItems] = useState([]);
   const { fetchFoodItemsByOwnerId } = useFoodItems();
 
+  const [loading, setLoading] = useState(true);
+
   const user = localStorage.getItem("user");
+
+  const addFoodItems = (newItem) => {
+    setFoodItems((prevItems) => [...prevItems, newItem]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,13 +29,18 @@ function Dashboard() {
 
         if (fetchedItems != null) {
           setFoodItems(fetchedItems);
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  return (
+  return loading ? (
+    <CircularProgress />
+  ) : (
     <div className="flex justify-start min-h-screen w-full">
       <div className="hidden md:block">
         <Sidebar />
@@ -37,10 +49,13 @@ function Dashboard() {
         <Header />
         <div className=" my-[2vh] rounded-2xl w-full h-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[2vh] mb-[2vh]">
-            <DashBoardUsageStats />
+            <DashBoardUsageStats fetchedFoodItems={foodItems} />
             <DashboardScore />
           </div>
-          <DashboardFoodItems />
+          <DashboardFoodItems
+            fetchedFoodItems={foodItems}
+            addItem={addFoodItems}
+          />
         </div>
       </div>
     </div>
