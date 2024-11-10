@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+import { toastSuccess } from "./notifications";
+
 export default function Navbar({ toggleDrawer }) {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
@@ -21,6 +24,13 @@ export default function Navbar({ toggleDrawer }) {
   useEffect(()=>{
     setOpenSideBar(false);
   },[counter])
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    toastSuccess("Logged out successfully!");
+    navigate("/login");
+  };
+
   return (
     <nav className="bg-gray-100 mt-[2vh]  min-h-20 rounded-xl shadow-md w-full px-4 py-2 flex items-center justify-between">
       <div className="flex items-center space-x-0 md:space-x-8">
@@ -66,7 +76,7 @@ export default function Navbar({ toggleDrawer }) {
           variant="contained"
           color="primary"
           className=""
-          onClick={() => console.log("Logout action")}
+          onClick={() => {handleLogout()}}
         >
           <FaUserCircle className="text-white-600 cursor-pointer text-xl hidden md:block mr-2" />
           Logout

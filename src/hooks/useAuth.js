@@ -40,8 +40,8 @@ const useAuth = () => {
         const data = response.data;
 
         return data.statusText === "success"
-          ? { user: data.user, message: data.status, token: data.token }
-          : { user: null, message: data.status, token: null };
+          ? { user: data.user, message: data.statusText, token: data.token }
+          : { user: null, message: data.statusText, token: null };
       } else {
         return false;
       }

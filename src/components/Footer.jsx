@@ -1,13 +1,12 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { FaGithub } from "react-icons/fa"; // Import GitHub icon from react-icons
+import { FaGithub } from "react-icons/fa";
 
 function Footer() {
-  // Updated GitHub URLs for each user
   const githubLinks = {
-    aniket: "https://github.com/Aniket-3103",  // Updated URL for Aniket
-    parthesh: "https://github.com/parthesh-tiwari",  // Updated URL for Parthesh
-    shubham: "https://github.com/shubs-code",  // Updated URL for Shubham
+    aniket: "https://github.com/Aniket-3103",
+    parthesh: "https://github.com/parthesh-tiwari",
+    shubham: "https://github.com/shubs-code",
   };
 
   return (
@@ -17,35 +16,37 @@ function Footer() {
           &copy; 2023 Zero Waste Kitchen. All rights reserved.
         </Typography>
 
-        {/* Display the team members with clickable GitHub links */}
         <div className="mt-4">
           <Typography variant="body1" color="textSecondary" gutterBottom>
             Developed by:
           </Typography>
 
-          <div className="flex justify-center space-x-6">
-            <div 
-              style={{ cursor: "pointer" }} 
+          <div className="flex justify-center space-x-8 mt-4">
+            {/* Member: Aniket */}
+            <div
+              className="flex flex-col items-center cursor-pointer"
               onClick={() => window.open(githubLinks.aniket, "_blank")}
             >
               <Typography variant="body2">Aniket Mishra</Typography>
-              <FaGithub size={20} />
+              <FaGithub size={20} className="mt-1" />
             </div>
 
-            <div 
-              style={{ cursor: "pointer" }} 
+            {/* Member: Parthesh */}
+            <div
+              className="flex flex-col items-center cursor-pointer"
               onClick={() => window.open(githubLinks.parthesh, "_blank")}
             >
               <Typography variant="body2">Parthesh Tiwari</Typography>
-              <FaGithub size={20} />
+              <FaGithub size={20} className="mt-1" />
             </div>
 
-            <div 
-              style={{ cursor: "pointer" }} 
+            {/* Member: Shubham */}
+            <div
+              className="flex flex-col items-center cursor-pointer"
               onClick={() => window.open(githubLinks.shubham, "_blank")}
             >
               <Typography variant="body2">Shubham Singh</Typography>
-              <FaGithub size={20} />
+              <FaGithub size={20} className="mt-1" />
             </div>
           </div>
         </div>

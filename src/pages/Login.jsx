@@ -17,10 +17,6 @@ function LoginPage() {
     navigate("/sign-up");
   };
 
-  const navigateToDashboardPage = () => {
-    navigate("/dashboard");
-  };
-
   const handleLogin = async () => {
     setLoading(true);
     if (email === "" || password === "") {
@@ -36,15 +32,14 @@ function LoginPage() {
     const response = await login(payload);
 
     setLoading(true);
-    if (response) {
+    if (response != null) {
       if (response?.user) {
+        navigate("/dashboard");
         toastSuccess("Logged in successfully");
         localStorage.setItem("user", JSON.stringify(response.user));
         resetValues();
 
         setLoading(false);
-        navigate("/dashboard");
-        return;
       } else {
         toastError(response?.message ?? "Something went wrong");
         return setLoading(false);
