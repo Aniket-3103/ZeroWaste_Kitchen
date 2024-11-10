@@ -19,6 +19,13 @@ export default function DashBoardUsageStats({ fetchedFoodItems }) {
     );
   };
 
+  const isExpired = (isoString) => {
+    const today = new Date();
+    const targetDate = new Date(isoString);
+
+    return ( targetDate < today );
+  };
+
   const calculateToday = () => {
     let today = 0;
     if (fetchedFoodItems != null) {
@@ -30,6 +37,19 @@ export default function DashBoardUsageStats({ fetchedFoodItems }) {
     }
     return today;
   };
+
+  const calculateExpired = () => {
+    let expired = 0;
+    if (fetchedFoodItems != null) {
+      for (const item of fetchedFoodItems) {
+        if (isExpired(item.expiry)) {
+          expired++;
+        }
+      }
+    }
+    return [fetchedFoodItems?.length, expired, fetchedFoodItems?.length - expired];
+  };
+  const expiryData = calculateExpired();
 
   return (
     <Card className="p-6 bg-white text-zinc-900">
@@ -64,25 +84,27 @@ export default function DashBoardUsageStats({ fetchedFoodItems }) {
         <div
           className="h-40 flex items-end gap-3"
           role="group"
-          aria-label="Sales statistics graph"
+          aria-label=""
         >
           <div
-            className="flex-1 bg-blue-500/20 rounded-t-lg h-[60%]"
+            className={`flex-1 bg-blue-500/20 rounded-t-lg`}
+            style={{height:(expiryData[2]/expiryData[0]+"")*100+"%"}}
             role="img"
-            aria-label="Consumed: 60%"
           />
           <div
-            className="flex-1 bg-red-500/20 rounded-t-lg h-[40%]"
+            className={`flex-1 bg-red-500/20 rounded-t-lg`}
+            style={{height:(expiryData[1]/expiryData[0]+"")*100+"%"}}
             role="img"
             aria-label="Expired: 40%"
           />
           <div
-            className="flex-1 bg-green-500/20 rounded-t-lg h-[80%]"
+            className="flex-1 bg-green-500/20 rounded-t-lg h-[10%]"
             role="img"
             aria-label="Donated: 80%"
           />
           <div
-            className="flex-1 bg-yellow-500/20 rounded-t-lg h-[70%]"
+            className="flex-1 bg-yellow-500/20 rounded-t-lg "
+            style={{height:(expiryData[2]/expiryData[0]+"")*100+"%"}}
             role="img"
             aria-label="Available: 70%"
           />
