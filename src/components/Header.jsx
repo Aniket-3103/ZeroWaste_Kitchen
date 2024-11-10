@@ -62,7 +62,7 @@ export default function Navbar({ toggleDrawer }) {
         <Button
           variant="text"
           className="text-gray-600"
-          onClick={() => console.log("Go to Donate")}
+          onClick={() => navigate("/donate")}
         >
           <span className="hidden md:block">Donate</span> <BiDonateHeart className="md:hidden w-6 h-6"/>
         </Button>

@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, MenuItem, Select, InputLabel, FormControl, Typography } from '@mui/material';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead,
+  TableRow, Button, MenuItem, Select, InputLabel, FormControl, Typography, Paper
+} from '@mui/material';
 import { FaCheckCircle, FaPlusCircle } from 'react-icons/fa';
 import axios from 'axios';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import DashboardMessage from '../components/dashboard/DashboardMessage';
 
 function Donation() {
   const [foodItems, setFoodItems] = useState([]);
@@ -12,13 +18,14 @@ function Donation() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const user=JSON.parse(localStorage.getItem("user"));
-        console.log("I am " + user._id);
-        const foodRes = await axios.get(`http://localhost:5000/api/foodItems/${user._id}`);  
-        const ngosRes = await axios.get('http://localhost:5000/getNgos');
-        console.log(foodRes.data) 
-        setFoodItems(foodRes.data);
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log(user);
+        const ngosRes = await axios.get('http://localhost:5000/api/auth/getNgos');
         setNgos(ngosRes.data);
+
+        const foodRes = await axios.get(`http://localhost:5000/api/foodItems/${user._id}`);
+        console.log(foodRes.data);
+        setFoodItems(foodRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -34,78 +41,98 @@ function Donation() {
     }
 
     try {
-      await axios.post('/api/donate', { id, donatedTo: selectedNgo });  // Replace with your actual donate API endpoint
-      setDonatedFood((prevDonatedFood) => new Set(prevDonatedFood.add(id))); // Mark the food as donated
+      await axios.post('/api/donate', { id, donatedTo: selectedNgo });
+      setDonatedFood((prevDonatedFood) => new Set(prevDonatedFood.add(id)));
     } catch (error) {
       console.error('Error donating food:', error);
     }
   };
 
   return (
-    <div className="container" style={{ padding: '2rem' }}>
-      <Typography variant="h4" gutterBottom>
-        Food Donation
-      </Typography>
-
-      {/* NGO Selection Dropdown */}
-      <FormControl fullWidth margin="normal">
-        <InputLabel id="ngo-select-label">Select NGO</InputLabel>
-        <Select
-          labelId="ngo-select-label"
-          value={selectedNgo}
-          label="Select NGO"
-          onChange={(e) => setSelectedNgo(e.target.value)}
-        >
-          {ngos.map((ngo) => (
-            <MenuItem key={ngo._id} value={ngo._id}>
-              {ngo.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      {/* Food Table */}
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Food Name</TableCell>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Donation Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {foodItems.map((foodItem) => (
-              <TableRow key={foodItem.id}>
-                <TableCell>{foodItem.name}</TableCell>
-                <TableCell>{new Date(foodItem.expiry).toLocaleDateString()}</TableCell>
-                <TableCell>{foodItem.quantity}</TableCell>
-                <TableCell>
-                  {/* Donation Button */}
-                  {!foodItem.isDonated ? (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDonate(foodItem.id)}
-                      disabled={donatedFood.has(foodItem.id)}
-                    >
-                      <FaPlusCircle style={{ marginRight: '0.5rem' }} />
-                      Donate
-                    </Button>
+    <div className="flex justify-start min-h-screen w-full">
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+      <div className="ml-[calc(2vh)] md:ml-[calc(250px+4vh)] grow flex flex-col mr-[2vh]">
+        <Header />
+        <div className=" my-[2vh] rounded-2xl w-full h-full">
+            <DashboardMessage/>
+        <Paper elevation={3} className="p-4 mt-4">
+            <Typography variant="h4" gutterBottom>
+              Food Donation
+            </Typography>
+  
+            {/* NGO Selection Dropdown */}
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="ngo-select-label">Select NGO</InputLabel>
+              <Select
+                labelId="ngo-select-label"
+                value={selectedNgo}
+                label="Select NGO"
+                onChange={(e) => setSelectedNgo(e.target.value)}
+              >
+                {ngos.map((ngo) => (
+                  <MenuItem key={ngo._id} value={ngo._id}>
+                    {ngo.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+  
+            {/* Food Table */}
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Food Name</TableCell>
+                    <TableCell>Expiry Date</TableCell>
+                    <TableCell>Quantity</TableCell>
+                    <TableCell>Donation Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {foodItems.length > 0 ? (
+                    foodItems.map((foodItem) =>  (
+                      <TableRow key={foodItem.id}>
+                        <TableCell>{foodItem.name}</TableCell>
+                        <TableCell>{new Date(foodItem.expiry).toLocaleDateString()}</TableCell>
+                        <TableCell>{foodItem.quantity}</TableCell>
+                        <TableCell>
+                          {!foodItem.isDonated ? (
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => handleDonate(foodItem.id)}
+                              disabled={donatedFood.has(foodItem.id)}
+                            >
+                              <FaPlusCircle style={{ marginRight: '0.5rem' }} />
+                              Donate
+                            </Button>
+                          ) : (
+                            <Button variant="contained" color="success" disabled>
+                              <FaCheckCircle style={{ marginRight: '0.5rem' }} />
+                              Donated
+                            </Button>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))
                   ) : (
-                    <Button variant="contained" color="success" disabled>
-                      <FaCheckCircle style={{ marginRight: '0.5rem' }} />
-                      Donated
-                    </Button>
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">
+                        No food items available for donation.
+                      </TableCell>
+                    </TableRow>
                   )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </div>
+      </div>
     </div>
+            
+  
   );
 }
 
