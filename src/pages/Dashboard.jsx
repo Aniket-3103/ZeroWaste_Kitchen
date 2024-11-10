@@ -50,7 +50,7 @@ function Dashboard() {
         <div className=" my-[2vh] rounded-2xl w-full h-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[2vh] mb-[2vh]">
             <DashBoardUsageStats fetchedFoodItems={foodItems} />
-            <DashboardScore foodItems={foodItems}/>
+            <DashboardScore fetchedFoodItems={foodItems}/>
           </div>
           <DashboardFoodItems
             fetchedFoodItems={foodItems}

@@ -1,8 +1,28 @@
 import { Box, Card, Typography } from "@mui/material" // Import MUI components
 
 
-export default function DashboardScore({ score = 30, className }) {
+export default function DashboardScore({ fetchedFoodItems, score = 30, className }) {
   // Ensure score is between 0 and 100
+  if(fetchedFoodItems){
+    const isExpired = (isoString) => {
+        const today = new Date();
+        const targetDate = new Date(isoString);
+
+        return ( targetDate < today );
+    };
+    
+    let expired = 0;
+    let total = fetchedFoodItems.length;
+    fetchedFoodItems.forEach(item => {
+        if (isExpired(item.expiry)) {
+            expired++;
+        }
+    });
+    score = ((total-expired)/total)*100;
+    score = Math.floor(score);
+    console.log(score, total, expired/total)
+
+  }
   const normalizedScore = Math.min(100, Math.max(0, score))
   
   return (
