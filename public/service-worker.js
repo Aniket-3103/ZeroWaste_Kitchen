@@ -28,4 +28,4 @@ const checkForNotifications = () => {
 };
 
 // Check for notifications every minute
-setInterval(checkForNotifications, 10 * 1000);
+setInterval(checkForNotifications, 1 * 1000);
